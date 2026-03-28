@@ -8,13 +8,11 @@ void setup() {
   pinMode(3, INPUT_PULLUP);
   pinMode(7, OUTPUT);
   pinMode(11, OUTPUT);
-  Serial.begin(9600);
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int val = analogRead(A0);
-  Serial.println(val);
 
   if (digitalRead(3) == LOW) {  // 押すとLOW
     if (!lastswitchState) switchState = !switchState;
