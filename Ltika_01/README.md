@@ -1,43 +1,33 @@
-# 🔌 Arduino Portfolio
+# ⏱ 非同期LED制御（millis）
 
 ## 📌 概要
-Arduinoを用いた開発プロジェクトをまとめたポートフォリオです。  
-基礎から応用まで、段階的にスキルを習得していく過程を重視しています。
+millis()を使用して、delayを使わずにLEDを点滅させるプログラムです。
 
 ---
 
-## 🧑‍💻 スキル
-- Arduino（C/C++）
-- デジタル入出力制御
-- アナログ入力
-- 時間制御（millis）
-- 状態管理
+## ⚙️ 動作
+- 1秒ごとにLEDのON/OFFを切り替え
 
 ---
 
-## 📂 作品一覧
-
-| No | プロジェクト名 | 内容 | 主な技術 |
-|----|--------------|------|----------|
-| 1 | [LED点滅（基礎）](./Ltika_01) | delayを使った基本的なLED点滅 | digitalWrite / delay |
-| 2 | [非同期LED制御](./Ltika_02) | millisを使った非ブロッキング処理 | millis / 時間管理 |
-| 3 | [スイッチ連動LED制御](./Ltika_switch) | ボタンでLED制御＋状態管理 | INPUT_PULLUP / トグル制御 |
+## 🛠 使用技術
+- millis
+- ノンブロッキング処理
 
 ---
 
-## 📁 ディレクトリ構成
-arduino_project1/
-│
-├── Ltika_01/
-│ ├── Ltika_01.ino
-│ └── README.md
-│
-├── Ltika_02/
-│ ├── Ltika_02.ino
-│ └── README.md
-│
-├── Ltika_switch/
-│ ├── Ltika_switch.ino
-│ └── README.md
-│
-└── README.md
+## 💡 ポイント
+- delayを使わないことで他の処理と並行可能
+- 実務に近い時間管理の実装
+
+---
+
+## 🔧 使用部品
+- ELEGOO Uno R3
+- LED
+- 抵抗
+
+---
+
+## 📷 動作イメージ
+※ここに画像や動画を追加
