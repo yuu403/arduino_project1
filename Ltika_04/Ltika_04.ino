@@ -4,8 +4,7 @@ const int RED = 7;
 const int YELLOW = 9;
 const int GREEN = 11;
 
-const int PED_RED = 5;
-const int PED_GREEN = 6;
+
 
 // 状態定義
 enum State {
@@ -33,9 +32,6 @@ void setup() {
   pinMode(YELLOW, OUTPUT);
   pinMode(GREEN, OUTPUT);
 
-  pinMode(PED_RED, OUTPUT);
-  pinMode(PED_GREEN, OUTPUT);
-
   pinMode(BUTTON, INPUT_PULLUP);
 }
 
@@ -58,8 +54,7 @@ void loop() {
 
   switch (state) {
     case RED_STATE: // 赤
-      setLED(HIGH, LOW, LOW, brightness);
-      setPedLED(LOW, HIGH, brightness);
+      setLED(HIGH, LOW, LOW);
 
       if (now - startTime >= redTime) {
         startTime = now;
@@ -69,7 +64,6 @@ void loop() {
 
     case GREEN_STATE: // 緑
       setLED(LOW, HIGH, LOW);
-      setPedLED(HIGH, LOW); // 歩行者は赤
 
       if (now - startTime >= greenTime) {
         startTime = now;
@@ -79,7 +73,6 @@ void loop() {
 
     case YELLOW_STATE: // 黄
       setLED(LOW, LOW, HIGH);
-      setPedLED(HIGH, LOW); // 歩行者は赤
 
       if (now - startTime >= yellowTime) {
         startTime = now;
@@ -96,8 +89,3 @@ void setLED(int r, int y, int g) {
   degitalWrite(GREEN, g);
 }
 
-// 歩行者用LED
-void setPedLED(int red, int green) {
-  degitalWrite(PED_RED, red);
-  degitalWrite(PED_GREEN, green);
-}
