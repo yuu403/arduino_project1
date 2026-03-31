@@ -1,5 +1,4 @@
 // ピン設定
-const int BUTTON = 3;
 const int RED = 7;
 const int YELLOW = 9;
 const int GREEN = 11;
@@ -27,22 +26,12 @@ void setup() {
   pinMode(RED, OUTPUT);
   pinMode(YELLOW, OUTPUT);
   pinMode(GREEN, OUTPUT);
-  pinMode(BUTTON, INPUT_PULLUP);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   unsigned long now = millis();
 
-  if (digitalRead(BUTTON) == LOW) {  // 歩行者用信号
-    if (!lastswitchState) {
-      startTime = now;
-      state = RED_STATE;
-    }
-    lastswitchState = true;
-  } else {
-    lastswitchState = false;
-  }
   switch (state) {
     case RED_STATE: // 赤
       setLED(HIGH, LOW, LOW);

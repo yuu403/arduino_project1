@@ -1,7 +1,7 @@
 // ピン設定
 const int BUTTON = 3;
-const int RED = 7;
-const int YELLOW = 9;
+const int RED = 9;
+const int YELLOW = 10;
 const int GREEN = 11;
 
 const int PED_RED = 5;

@@ -1,11 +1,13 @@
 // ピン設定
 const int BUTTON = 3;
-const int RED = 7;
-const int YELLOW = 9;
+const int RED = 9;
+const int YELLOW = 10;
 const int GREEN = 11;
 
 const int PED_RED = 5;
 const int PED_GREEN = 6;
+
+const int LIGHT_SENSOR = A0;
 
 // 状態定義
 enum State {
@@ -43,6 +45,11 @@ void loop() {
   // put your main code here, to run repeatedly:
   unsigned long now = millis();
 
+  int lightValue = analogRead(LIGHT_SENSOR);
+
+  // 明るさ計算（暗いほど明るくする）
+  int brightness = map(lightValue, 0, 1023, 255, 50);
+
   // ボタン（押した瞬間だけ検出）
   bool currentButton = digitalRead(BUTTON);
 
@@ -68,8 +75,8 @@ void loop() {
       break;
 
     case GREEN_STATE: // 緑
-      setLED(LOW, HIGH, LOW);
-      setPedLED(HIGH, LOW); // 歩行者は赤
+      setLED(LOW, LOW, HIGH, brightness);
+      setPedLED(HIGH, LOW, brightness); // 歩行者は赤
 
       if (now - startTime >= greenTime) {
         startTime = now;
@@ -78,8 +85,8 @@ void loop() {
       break;
 
     case YELLOW_STATE: // 黄
-      setLED(LOW, LOW, HIGH);
-      setPedLED(HIGH, LOW); // 歩行者は赤
+      setLED(LOW, HIGH, LOW, brightness);
+      setPedLED(HIGH, LOW, brightness); // 歩行者は赤
 
       if (now - startTime >= yellowTime) {
         startTime = now;
@@ -90,14 +97,14 @@ void loop() {
 }
 
 // LED制御を関数化
-void setLED(int r, int y, int g) {
-  degitalWrite(RED, r);
-  degitalWrite(YELLOW, y);
-  degitalWrite(GREEN, g);
+void setLED(int r, int y, int g, int brightness) {
+  analogWrite(RED, r ? brightness : 0);
+  analogWrite(YELLOW, y ? brightness : 0);
+  analogWrite(GREEN, g ? brightness : 0);
 }
 
 // 歩行者用LED
-void setPedLED(int red, int green) {
-  degitalWrite(PED_RED, red);
-  degitalWrite(PED_GREEN, green);
+void setPedLED(int red, int green, int brightness) {
+  analogWrite(PED_RED, red ? brightness : 0);
+  analogWrite(PED_GREEN, green ? brightness : 0);
 }
