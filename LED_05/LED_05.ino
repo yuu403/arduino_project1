@@ -58,8 +58,8 @@ void loop() {
 
   switch (state) {
     case RED_STATE: // 赤
-      setLED(HIGH, LOW, LOW, brightness);
-      setPedLED(LOW, HIGH, brightness);
+      setLED(HIGH, LOW, LOW);
+      setPedLED(LOW, HIGH);
 
       if (now - startTime >= redTime) {
         startTime = now;
