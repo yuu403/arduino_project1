@@ -1,43 +1,33 @@
-# 🔌 Arduino Portfolio
+# 💡 LED点滅（基礎）
 
 ## 📌 概要
-Arduinoを用いた開発プロジェクトをまとめたポートフォリオです。  
-基礎から応用まで、段階的にスキルを習得していく過程を重視しています。
+ArduinoでLEDを点滅させる基本的なプログラムです。
 
 ---
 
-## 🧑‍💻 スキル
-- Arduino（C/C++）
-- デジタル入出力制御
-- アナログ入力
-- 時間制御（millis）
-- 状態管理
+## ⚙️ 動作
+- LEDが「3秒ON → 1秒OFF」で点滅
 
 ---
 
-## 📂 作品一覧
-
-| No | プロジェクト名 | 内容 | 主な技術 |
-|----|--------------|------|----------|
-| 1 | [LED点滅（基礎）](./Ltika_01) | delayを使った基本的なLED点滅 | digitalWrite / delay |
-| 2 | [非同期LED制御](./Ltika_02) | millisを使った非ブロッキング処理 | millis / 時間管理 |
-| 3 | [スイッチ連動LED制御](./Ltika_switch) | ボタンでLED制御＋状態管理 | INPUT_PULLUP / トグル制御 |
+## 🛠 使用技術
+- digitalWrite
+- delay
 
 ---
 
-## 📁 ディレクトリ構成
-arduino_project1/
-│
-├── Ltika_01/
-│ ├── Ltika_01.ino
-│ └── README.md
-│
-├── Ltika_02/
-│ ├── Ltika_02.ino
-│ └── README.md
-│
-├── Ltika_switch/
-│ ├── Ltika_switch.ino
-│ └── README.md
-│
-└── README.md
+## 💡 ポイント
+- Arduinoの基本的な出力制御を学習
+- delayによるシンプルな時間制御
+
+---
+
+## 🔧 使用部品
+- ELEGOO Uno R3
+- LED
+- 抵抗
+
+---
+
+## 📷 動作イメージ
+※ここに画像や動画を追加
