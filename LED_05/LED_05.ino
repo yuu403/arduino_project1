@@ -68,7 +68,7 @@ void loop() {
       break;
 
     case GREEN_STATE: // 緑
-      setLED(LOW, HIGH, LOW);
+      setLED(LOW, LOW, HIGH);
       setPedLED(HIGH, LOW); // 歩行者は赤
 
       if (now - startTime >= greenTime) {
@@ -78,7 +78,7 @@ void loop() {
       break;
 
     case YELLOW_STATE: // 黄
-      setLED(LOW, LOW, HIGH);
+      setLED(LOW, HIGH, LOW);
       setPedLED(HIGH, LOW); // 歩行者は赤
 
       if (now - startTime >= yellowTime) {
@@ -91,13 +91,13 @@ void loop() {
 
 // LED制御を関数化
 void setLED(int r, int y, int g) {
-  degitalWrite(RED, r);
-  degitalWrite(YELLOW, y);
-  degitalWrite(GREEN, g);
+  digitalWrite(RED, r);
+  digitalWrite(YELLOW, y);
+  digitalWrite(GREEN, g);
 }
 
 // 歩行者用LED
 void setPedLED(int red, int green) {
-  degitalWrite(PED_RED, red);
-  degitalWrite(PED_GREEN, green);
+  digitalWrite(PED_RED, red);
+  digitalWrite(PED_GREEN, green);
 }
