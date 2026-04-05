@@ -1,5 +1,6 @@
 // ピン設定
 const int BUTTON = 3;
+
 const int RED = 9;
 const int YELLOW = 10;
 const int GREEN = 11;
@@ -20,6 +21,7 @@ State state = RED_STATE;
 
 // 時間管理
 unsigned long startTime = 0;
+unsigned long sensorTime = 0;
 
 // 各状態の時間（ミリ秒）
 const unsigned long redTime = 5000;
@@ -28,33 +30,50 @@ const unsigned long yellowTime = 2000;
 
 bool lastButtonState = HIGH;
 
+// 明るさ平滑化用
+int brightness = 0;
+int prevBrightness = 0;
 
 void setup() {
-  // put your setup code here, to run once:
   pinMode(RED, OUTPUT);
   pinMode(YELLOW, OUTPUT);
   pinMode(GREEN, OUTPUT);
-
   pinMode(PED_RED, OUTPUT);
   pinMode(PED_GREEN, OUTPUT);
-
   pinMode(BUTTON, INPUT_PULLUP);
+
+  Serial.begin(9600); // デバッグ用
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   unsigned long now = millis();
+  unsigned long sensor_now = millis();
 
   int lightValue = analogRead(LIGHT_SENSOR);
 
-  // 明るさ計算（明るいほど明るくする）
-  int brightness = map(lightValue, 0, 1023, 50, 255);
+  if (lightValue > 300) {
+    brightness = 255;     // 明るい → 最大 
+  } else {
+    brightness = 10;   // 暗い → 消える
+  }
 
-  // ボタン（押した瞬間だけ検出）
+  // ===== デバッグ表示（効果を見える化）=====
+  if (sensor_now - sensorTime >= 100) {
+    Serial.print(now);
+    Serial.print(", ");
+    Serial.print(lightValue);
+    Serial.print(", ");
+    Serial.print(brightness);
+    Serial.print(", ");
+    Serial.println(state);
+
+    sensorTime = millis();
+  }
+
+  // ボタン処理
   bool currentButton = digitalRead(BUTTON);
 
   if (lastButtonState == HIGH && currentButton == LOW) {
-    // 緑のときだけ反応
     if (state == GREEN_STATE) {
       state = YELLOW_STATE;
       startTime = now;
@@ -63,8 +82,9 @@ void loop() {
 
   lastButtonState = currentButton;
 
+  // 状態制御
   switch (state) {
-    case RED_STATE: // 赤
+    case RED_STATE:
       setLED(HIGH, LOW, LOW, brightness);
       setPedLED(LOW, HIGH, brightness);
 
@@ -74,9 +94,9 @@ void loop() {
       }
       break;
 
-    case GREEN_STATE: // 緑
+    case GREEN_STATE:
       setLED(LOW, LOW, HIGH, brightness);
-      setPedLED(HIGH, LOW, brightness); // 歩行者は赤
+      setPedLED(HIGH, LOW, brightness);
 
       if (now - startTime >= greenTime) {
         startTime = now;
@@ -84,9 +104,9 @@ void loop() {
       }
       break;
 
-    case YELLOW_STATE: // 黄
+    case YELLOW_STATE:
       setLED(LOW, HIGH, LOW, brightness);
-      setPedLED(HIGH, LOW, brightness); // 歩行者は赤
+      setPedLED(HIGH, LOW, brightness);
 
       if (now - startTime >= yellowTime) {
         startTime = now;
@@ -96,14 +116,14 @@ void loop() {
   }
 }
 
-// LED制御を関数化
+// LED制御
 void setLED(int r, int y, int g, int brightness) {
   analogWrite(RED, r ? brightness : 0);
   analogWrite(YELLOW, y ? brightness : 0);
   analogWrite(GREEN, g ? brightness : 0);
 }
 
-// 歩行者用LED
+// 歩行者LED
 void setPedLED(int red, int green, int brightness) {
   analogWrite(PED_RED, red ? brightness : 0);
   analogWrite(PED_GREEN, green ? brightness : 0);

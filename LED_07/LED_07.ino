@@ -50,9 +50,9 @@ void loop() {
   int lightValue = analogRead(LIGHT_SENSOR);
 
   if (lightValue > 300) {
-    brightness = 10;     // 明るい → 消える
+    brightness = 255;     // 明るい → 最大 
   } else {
-    brightness = 255;   // 暗い → 最大
+    brightness = 10;   // 暗い → 消える
   }
 
   // ===== デバッグ表示（効果を見える化）=====
